@@ -1,5 +1,5 @@
-# onlyoffice-casaos
-OnlyOffice - CasaOS - Docker compose
+# onlyoffice-docs-casaos
+OnlyOffice-Docs - CasaOS - Docker compose
 
 Ver en "localhost:8000"
 
