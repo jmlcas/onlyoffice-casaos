@@ -10,6 +10,22 @@ https://icon.casaos.io/main/all/rabbitmq.png
 https://icon.casaos.io/main/all/postgres.png
 
 ----------------------------------------------
+version: '3.3'
+
+services:
+
+  onlyoffice:
+    image: onlyoffice/documentserver:latest  #latest-arm64 (para Raspberry Pi)
+    container_name: onlyoffice
+    stdin_open: true
+    tty: true
+    restart: always
+    ports:
+      - '8800:80'
+      - '9443:443'
+    volumes:
+      - /DATA/AppData/onlyoffice/data:/var/www/onlyoffice/Data
+      
 
 version: '3.3'
 
