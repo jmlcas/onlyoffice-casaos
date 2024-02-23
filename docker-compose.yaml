@@ -1,28 +1,44 @@
-# OnlyOffice-Docs - CasaOS
-
-# Icono para OnlyOffice
-https://icon.casaos.io/main/all/onlyoffice.png
-
-----------------------------------------------
-
-version: '3.3'
-
+name: onlyoffice-docs
 services:
-
   onlyoffice:
-    image: onlyoffice/documentserver:latest  #latest-arm64 (para Raspberry Pi)
     container_name: onlyoffice-docs
-    restart: unless-stopped
-    stdin_open: true
-    tty: true    
-    ports:
-      - '8500:80'
-      - '8543:443'
-    volumes:
-      - /DATA/AppData/onlyoffice/data:/var/www/onlyoffice/Data   
     environment:
       - JWT_ENABLED=true
+      - JWT_HEADER=Authorization
+      - JWT_IN_BODY=true
       - JWT_SECRET=my_secret
-#      - JWT_HEADER=Authorization
-#      - JWT_IN_BODY=true
-    stop_grace_period: 60s
+    image: onlyoffice/documentserver:latest
+    labels:
+      icon: https://icon.casaos.io/main/all/onlyoffice.png
+    ports:
+      - target: 80
+        published: "8500"
+        protocol: tcp
+      - target: 443
+        published: "8543"
+        protocol: tcp
+    restart: unless-stopped
+    stdin_open: true
+    stop_grace_period: 1m0s
+    tty: true
+    volumes:
+      - type: bind
+        source: /DATA/AppData/onlyoffice/data
+        target: /var/www/onlyoffice/Data
+    networks:
+      - onlyoffice
+    privileged: false
+networks:
+  onlyoffice:
+    name: onlyoffice
+x-casaos:
+  author: Labarta
+  category: Utilities
+  hostname: ""
+  icon: https://icon.casaos.io/main/all/onlyoffice.png
+  index: /
+  port_map: "8500"
+  scheme: http
+  store_app_id: onlyoffice-docs
+  title:
+    custom: OnlyOffice-Docs
